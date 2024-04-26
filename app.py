@@ -1,13 +1,13 @@
 # app.py
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from model_germannouns import predict_gender
 
-app = Flask(__name__, static_folder= '.')
+app = Flask(__name__)
 
 @app.route('/')
 def homepage():
-    return app.send_static_file("index.html")
+    return render_template("index.html")
 
 @app.route('/style.css')
 def homepage_css():
