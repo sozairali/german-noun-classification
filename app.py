@@ -2,10 +2,8 @@
 
 from flask import Flask, request, jsonify
 from model_germannouns import predict_gender
-from flask_cors import CORS
 
 app = Flask(__name__, static_folder= '.')
-CORS(app)
 
 @app.route('/predict_gender/<noun>')
 def predict_gender_route(noun):
