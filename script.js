@@ -1,7 +1,7 @@
 function checkGender() {
     const nounInput = document.getElementById('noun-input').value;
 
-    fetch('http://127.0.0.1:5000/predict_gender/' + nounInput, {
+    fetch('/predict_gender/' + nounInput, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
