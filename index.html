@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>German Noun Gender Checker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>German Noun Gender Checker</h1>
+    <div class="form-group">
+      <label for="noun-input">Enter a Noun:</label>
+      <input type="text" id="noun-input" placeholder="Enter a noun...">
+      <button onclick="checkGender()">Check Gender</button>
+    </div>
+    <div id="gender-result"></div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    // Get the input field
+    const inputField = document.getElementById('noun-input');
+
+    // Add event listener for keydown event
+    inputField.addEventListener('keydown', function(event) {
+      // Check if the Enter key was pressed
+      if (event.keyCode === 13) {
+        // Call the checkGender function
+        checkGender();
+      }
+    });
+  </script>
+</body>
+</html>
+
