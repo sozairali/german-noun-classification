@@ -47,10 +47,6 @@ def main():
     # Generate n-grams and append each set of n-grams as separate column
     for n in range(1, 6):
         nouns[Names[n]] = nouns['lemma'].apply(lambda i: create_ngram(i, n))
-
-    #print(nouns.head(5))
-    
-    #print(f"Current shape is {nouns.shape}")
     
     '''
     This creates a few summary statistics for the entire dataset
@@ -75,9 +71,7 @@ def main():
         absolute_values = create_dictsof_counts(nouns, nouns[Names[n]], 'genus')
         lst_absolute_counts.append(absolute_values.copy())
         absolute_values.clear()
-    
-    #print (lst_absolute_counts[1])
-    
+        
     '''
     
     This converts the list of nested dicts into dataframes we can
@@ -91,8 +85,6 @@ def main():
     absolute_counts_df.reset_index(inplace=True)
     absolute_counts_df.rename(columns={'index': 'n-gram'}, inplace=True)
     
-    #print(absolute_counts_df.head(1000))
-
     '''
     
     Conduct chi-square test and return p-value for each row
@@ -122,10 +114,8 @@ def main():
     # Reduce features to only those that contain the end character '<E>'
     reduced_features = reduced_features[reduced_features['n-gram'].apply(lambda x: '<E>' in x)]
     reduced_features = reduced_features['n-gram']
-    #print(reduced_features.head(50))
     
     print(f"Reduced Feature Length: {len(reduced_features)}")    
-    print(reduced_features.head(10))
     
     '''
     
@@ -147,9 +137,7 @@ def main():
         decisiontree_df[col] = '' 
         decisiontree_df[col] = decisiontree_df['Word'].apply(lambda x: col in x)
     
-        
-    print(decisiontree_df.head(50))
-    
+            
     '''
     
     This block of code implements the decision tree. The dataset is split into 
@@ -173,7 +161,7 @@ def main():
     
     '''
     
-    #choose_ccp_alpha(X_train_temp, y_train_temp, X_test, y_test)
+    choose_ccp_alpha(X_train_temp, y_train_temp, X_test, y_test)
     
     # Use alpha = 0.0001 to create the decision tree and calculate accuracy
     tre = tree.DecisionTreeClassifier(random_state=0, ccp_alpha=0.0001)
@@ -204,7 +192,7 @@ def main():
     
     '''
     
-    #visualize(tre, X, Y, 50)
+    visualize(tre, X, Y, 50)
 
     
     '''
@@ -336,9 +324,8 @@ def train_decision_tree(ccpaplha, xtrain, ytrain):
 
 '''
 
-Function that creates dicts of counts from...
-
-[TODO]
+Function that creates dicts of counts from a dataframe. It counts the occurences 
+of the categories in target column across each column.
 
 '''
 
