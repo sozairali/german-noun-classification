@@ -76,9 +76,10 @@ def calculate_p_value(row: pd.Series, expected_proportions: pd.Series) -> float:
         >>> 0.0 <= p_val <= 1.0
         True
     """
-    observed = row[['f', 'm', 'n']]
+    # Convert to numeric arrays to avoid dtype issues
+    observed = row[['f', 'm', 'n']].astype(float).values
     total = row['f'] + row['m'] + row['n']
-    expected = expected_proportions * total
+    expected = (expected_proportions * total).astype(float).values
 
     # Check if all expected counts are above minimum threshold
     if all(count > MIN_NGRAM_COUNT for count in expected):

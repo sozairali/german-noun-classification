@@ -36,7 +36,10 @@ def sample_ngrams():
         'lemma': ['ab', 'cd'],
         'genus': ['f', 'm'],
         'Chs': [['<S>', 'a', 'b', '<E>'], ['<S>', 'c', 'd', '<E>']],
-        'Chs2': [['<Sa', 'ab', 'b<E>'], ['<Sc', 'cd', 'd<E>']]
+        'Chs2': [['<S>a', 'ab', 'b<E>'], ['<S>c', 'cd', 'd<E>']],
+        'Chs3': [['<S>ab', 'ab<E>'], ['<S>cd', 'cd<E>']],
+        'Chs4': [['<S>ab<E>'], ['<S>cd<E>']],
+        'Chs5': [['<S>ab<E>'], ['<S>cd<E>']]
     })
 
 

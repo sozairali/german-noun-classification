@@ -24,11 +24,19 @@ class TestLoadModel:
 
     def test_model_not_found(self, tmp_path):
         """Test error when model file doesn't exist."""
+        # Clear cache to ensure error is raised
+        from germannouns.model import predictor
+        predictor._model_cache = None
+
         with pytest.raises(FileNotFoundError):
             load_model(tmp_path / "nonexistent.pkl")
 
     def test_corrupted_model(self, tmp_path):
         """Test error with corrupted model file."""
+        # Clear cache to ensure error is raised
+        from germannouns.model import predictor
+        predictor._model_cache = None
+
         model_path = tmp_path / "corrupted.pkl"
         # Write invalid pickle data
         with open(model_path, 'w') as f:
@@ -78,6 +86,10 @@ class TestPredictGender:
 
     def test_predict_model_not_found(self, tmp_path):
         """Test error when model doesn't exist."""
+        # Clear cache to ensure error is raised
+        from germannouns.model import predictor
+        predictor._model_cache = None
+
         with pytest.raises(FileNotFoundError):
             predict_gender("Haus", tmp_path / "nonexistent.pkl")
 
