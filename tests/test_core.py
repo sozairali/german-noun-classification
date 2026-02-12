@@ -26,17 +26,17 @@ class TestCreateNgram:
     def test_bigram(self):
         """Test bigram (n=2) generation."""
         result = create_ngram("ab", 2)
-        assert result == ['<Sa', 'ab', 'b<E>']
+        assert result == ['<S>a', 'ab', 'b<E>']
 
     def test_trigram(self):
         """Test trigram (n=3) generation."""
         result = create_ngram("ab", 3)
-        assert result == ['<Sab', 'ab<E>']
+        assert result == ['<S>ab', 'ab<E>']
 
     def test_fourgram(self):
         """Test 4-gram generation."""
         result = create_ngram("ab", 4)
-        assert result == ['<Sab<E>']
+        assert result == ['<S>ab<E>']
 
     def test_empty_string(self):
         """Test empty string handling."""
@@ -49,12 +49,12 @@ class TestCreateNgram:
         assert result == ['<S>', 'a', '<E>']
 
         result = create_ngram("a", 2)
-        assert result == ['<Sa', 'a<E>']
+        assert result == ['<S>a', 'a<E>']
 
     def test_longer_word(self):
         """Test longer word with trigrams."""
         result = create_ngram("Haus", 3)
-        expected = ['<SHa', 'Hau', 'aus', 'us<E>']
+        expected = ['<S>Ha', 'Hau', 'aus', 'us<E>']
         assert result == expected
 
 
@@ -64,13 +64,15 @@ class TestCalculatePValue:
     def test_valid_distribution(self, sample_gender_distribution):
         """Test with valid distribution."""
         row = pd.Series({
-            'f': 100,
-            'm': 60,
-            'n': 40,
+            'f': 100.0,
+            'm': 60.0,
+            'n': 40.0,
             'n-gram': 'test'
-        })
+        }, dtype=object)
+        # Ensure numeric columns are float
+        row[['f', 'm', 'n']] = row[['f', 'm', 'n']].astype(float)
         p_value = calculate_p_value(row, sample_gender_distribution)
-        assert isinstance(p_value, float)
+        assert isinstance(p_value, (float, np.floating))
         assert 0.0 <= p_value <= 1.0
 
     def test_low_counts_returns_nan(self, sample_gender_distribution):
@@ -88,11 +90,13 @@ class TestCalculatePValue:
         """Test perfectly distributed data (should have high p-value)."""
         expected = pd.Series({'f': 0.4, 'm': 0.3, 'n': 0.3})
         row = pd.Series({
-            'f': 400,
-            'm': 300,
-            'n': 300,
+            'f': 400.0,
+            'm': 300.0,
+            'n': 300.0,
             'n-gram': 'test'
-        })
+        }, dtype=object)
+        # Ensure numeric columns are float
+        row[['f', 'm', 'n']] = row[['f', 'm', 'n']].astype(float)
         p_value = calculate_p_value(row, expected)
         assert p_value > 0.9  # Should be close to 1.0
 
